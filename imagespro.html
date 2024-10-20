@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Uploader</title>
+</head>
+<style>
+    * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+input[type="file"] {
+    margin-bottom: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 4px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#imageGallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+#imageGallery img {
+    width: 150px;
+    margin: 10px;
+    border-radius: 5px;
+}
+
+</style>
+<body>
+    <div class="container">
+        <h1>Image Uploader</h1>
+        <form id="uploadForm">
+            <input type="file" id="imageInput" accept="image/*" multiple />
+            <button type="submit">Upload</button>
+        </form>
+        <div id="imageGallery"></div>
+    </div>
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', function (e) {
+    e.preventDefault(); // Prevent the default form submission
+
+    const imageInput = document.getElementById('imageInput');
+    const imageGallery = document.getElementById('imageGallery');
+
+    if (imageInput.files.length > 0) {
+        for (let i = 0; i < imageInput.files.length; i++) {
+            const file = imageInput.files[i];
+
+            // Creating URL for the uploaded image
+            const imgUrl = URL.createObjectURL(file);
+            
+            // Create an image element and set its source to the uploaded image
+            const imgElement = document.createElement('img');
+            imgElement.src = imgUrl;
+
+            // Add the image to the gallery
+            imageGallery.appendChild(imgElement);
+        }
+    }
+});
+
+    </script>
+</body>
+</html>
