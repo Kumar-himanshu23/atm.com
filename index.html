@@ -56,10 +56,28 @@ button:hover {
     margin-top: 20px;
 }
 
+.image-container {
+    position: relative;
+    display: inline-block;
+    margin: 10px;
+}
+
 #imageGallery img {
     width: 150px;
-    margin: 10px;
     border-radius: 5px;
+}
+
+.delete-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 12px;
 }
 
 </style>
@@ -75,28 +93,45 @@ button:hover {
 
     <script>
         document.getElementById('uploadForm').addEventListener('submit', function (e) {
-    e.preventDefault(); // Prevent the default form submission
+            e.preventDefault(); // Prevent the default form submission
 
-    const imageInput = document.getElementById('imageInput');
-    const imageGallery = document.getElementById('imageGallery');
+            const imageInput = document.getElementById('imageInput');
+            const imageGallery = document.getElementById('imageGallery');
 
-    if (imageInput.files.length > 0) {
-        for (let i = 0; i < imageInput.files.length; i++) {
-            const file = imageInput.files[i];
+            if (imageInput.files.length > 0) {
+                for (let i = 0; i < imageInput.files.length; i++) {
+                    const file = imageInput.files[i];
 
-            // Creating URL for the uploaded image
-            const imgUrl = URL.createObjectURL(file);
-            
-            // Create an image element and set its source to the uploaded image
-            const imgElement = document.createElement('img');
-            imgElement.src = imgUrl;
+                    // Creating URL for the uploaded image
+                    const imgUrl = URL.createObjectURL(file);
 
-            // Add the image to the gallery
-            imageGallery.appendChild(imgElement);
-        }
-    }
-});
+                    // Create a div container for the image and the delete button
+                    const imageContainer = document.createElement('div');
+                    imageContainer.classList.add('image-container');
 
+                    // Create an image element and set its source to the uploaded image
+                    const imgElement = document.createElement('img');
+                    imgElement.src = imgUrl;
+
+                    // Create a delete button
+                    const deleteButton = document.createElement('button');
+                    deleteButton.textContent = 'X';
+                    deleteButton.classList.add('delete-btn');
+
+                    // Add click event listener to delete the image
+                    deleteButton.addEventListener('click', function () {
+                        imageContainer.remove();
+                    });
+
+                    // Add the image and delete button to the container
+                    imageContainer.appendChild(imgElement);
+                    imageContainer.appendChild(deleteButton);
+
+                    // Add the container to the gallery
+                    imageGallery.appendChild(imageContainer);
+                }
+            }
+        });
     </script>
 </body>
 </html>
